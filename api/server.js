@@ -19,15 +19,18 @@ server.get('/users', (req, res) => {
     });
   });
 
-//Get a single user
-// server.get('/:id', (req, res) => {
-//     const { id } = req.params
-//     users.get(id).then(user => {
-//         res.status(200).json(user)
-//     }).catch(error => {
-//         res.status(500).json(error)
-//     })
-// })
+// Get a single user
+server.get('/users/:id', (req, res) => {
+    const { id } = req.params
+    users.findById(id).then(user => {
+        if(!user){
+            res.status(404).json({errorMessage: 'This user does not exist'})
+        }
+        res.status(200).json(user)
+    }).catch(error => {
+        res.status(500).json(error)
+    })
+})
 
 //Create user
 server.post('/users', (req, res) => {
